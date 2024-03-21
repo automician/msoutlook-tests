@@ -8,8 +8,6 @@ module.exports = {
   setupFiles: ['./global.js', './setup.selenidejs.extensions.js'],
   // given test framework configured (context setup (divers), reporting, etc)
   testEnvironment: './setup.appiumContext.env.ts',
-  // given tests pre- and post- conditions
-  setupFilesAfterEnv: ['./setup.app.metro.ts'],
   // etc...
   testTimeout: 90000,
   verbose: true,

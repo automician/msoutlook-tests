@@ -1,22 +1,26 @@
 # React Native Demo App(s)
 
-A demo project with React Native and End-to-End tests with SelenideJs + WebdriverIO based Appium implementation.
+A demo project with End-to-End tests with SelenideJs + WebdriverIO based Appium implementation for Windows and MacOS.
 
 ## Installation
 
 ### Pre-requisites (MacOS)
 
+To run E2E-tests:
+
 ```bash
-brew install watchman
-sudo gem install cocoapods
+npm install -g appium@next \
+&& appium driver install mac2 \
+&& appium driver doctor mac2
 ```
+
+### Pre-requisites (Windows)
 
 To run E2E-tests:
 
 ```bash
 npm install -g appium@next \
-&& appium driver install uiautomator2 \
-&& appium driver install xcuitest
+&& appium driver install --source=npm appium-windows-driver
 ```
 
 ### Install project dependencies
@@ -37,47 +41,31 @@ TBD
 
 #### Usefull commands
 
-```bash
-# list all simulators
-xcrun xctrace list devices
-# open simulator
-open -a Simulator
-# list all available and shutdown iPhone devices
-xcrun simctl list | grep '(Shutdown)' | grep iPhone | grep -v unavailable
-# open device with name "iPhone 14 Pro" in Simulator
-xcrun simctl boot "iPhone 14 Pro"
-# unarchive builds/ios.tar.gz into builds/
-tar -xvzf builds/ios.tar.gz -C builds/
-# install builds/*.app into booted device at simulator
-xcrun simctl install booted builds/*.app
-# reload ios app in simulator
-```
+TBD
 
 ## Run Tests
 
 In parallel terminal:
 
 ```bash
-appium server --relaxed-security
+appium
 ```
-
-(`--relaxed-security` is required to run adb shell commands)
 
 Then:
 
-### Run tests on opened android simulator with connected metro bundler
+### Run tests on Windows
 
 ```bash
-yarn test:e2e:metro:android
+yarn test:e2e:metro:windows
 ```
 
-### Run tests on opened ios simulator with connected metro bundler
+### Run tests on MacOS
 
 ```bash
-yarn test:e2e:metro:ios
+yarn test:e2e:metro:macos
 ```
 
-### Run tests on android/ios from scratch
+### Run tests on android/ios
 
 TBD
 
@@ -87,6 +75,23 @@ Given, Appium Inspector installed from [official releases](https://github.com/ap
 And opened,
 Then ensure Remote Path setting is `/` (not `/wd/hub`!),
 And connect to already opened android simulator by starting session with the following capabilities:
+
+#### Windows caps
+
+```bash
+    'appium:platformName': 'Windows',
+    'appium:automationName': 'Windows',
+    'appium:app': 'C:/Program Files/Microsoft Office/root/Office16/outlook.exe',
+    'ms:waitForAppLaunch': '2',
+```
+
+#### MacOS caps
+
+```bash
+    platformName: 'mac',
+    'appium:automationName': 'mac2',
+    'appium:bundleId': 'com.microsoft.Outlook',
+```
 
 #### Android caps
 
@@ -111,5 +116,5 @@ And connect to already opened android simulator by starting session with the fol
 
 ## E2E Tests TODOs
 
-* separate e2e tsconfig from main tsconfig, and exclude e2e folder from main tsconfig
-* make `$$` command support «per platform locators» same as the `$` command
+- separate e2e tsconfig from main tsconfig, and exclude e2e folder from main tsconfig
+- make `$$` command support «per platform locators» same as the `$` command
