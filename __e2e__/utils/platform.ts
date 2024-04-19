@@ -14,4 +14,7 @@ export const testPlatform = {
   get isIos() {
     return this.name?.toLowerCase() === 'ios'
   },
+  get isWindows() {
+    return this.name?.toLowerCase() === 'windows'
+  },
 }

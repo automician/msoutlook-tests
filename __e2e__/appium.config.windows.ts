@@ -8,6 +8,7 @@ export const config: RemoteOptions = {
     'appium:platformName': 'Windows',
     'appium:automationName': 'Windows',
     'appium:app': 'C:/Program Files/Microsoft Office/root/Office16/outlook.exe',
-    'ms:waitForAppLaunch': '2',
+    'ms:waitForAppLaunch': '5',
+    'ms:experimental-webdriver': true,
   },
 }

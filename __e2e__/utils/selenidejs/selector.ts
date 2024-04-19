@@ -16,7 +16,9 @@ export const selector = {
     if (matchedByExactText) {
       const text =
         matchedByExactText[1] || matchedByExactText[2] || matchedByExactText[3]
-      if (testPlatform.isAndroid) {
+      if (testPlatform.isWindows) {
+        return new By('xpath', `//*[text() = "${text}"]`)
+      } else if (testPlatform.isAndroid) {
         return new By(
           '-android uiautomator',
           `new UiSelector().text("${text}")`,
@@ -31,7 +33,9 @@ export const selector = {
     const matchedByTextContains = value.match(/^text=(.*?)$/s)
     if (matchedByTextContains) {
       const text = matchedByTextContains[1]
-      if (testPlatform.isAndroid) {
+      if (testPlatform.isWindows) {
+        return new By('xpath', `//*[contains (text(), "${text}")]`)
+      } else if (testPlatform.isAndroid) {
         return new By(
           '-android uiautomator',
           `new UiSelector().textContains("${text}")`,
