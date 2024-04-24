@@ -1,4 +1,4 @@
-# React Native Demo App(s)
+# MS Outlook tests for Windows and MacOS
 
 A demo project with End-to-End tests with SelenideJs + WebdriverIO based Appium implementation for Windows and MacOS.
 
