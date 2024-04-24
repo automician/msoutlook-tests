@@ -40,7 +40,7 @@ npm install office-addin-dev-certs
 ### Start server for custom add-in
 
 ```bash
-npm run start:desktop:outlook
+npm run start
 ```
 
 It may require signing in your Microsoft Account, but it's not necessary for running tests.
