@@ -45,13 +45,11 @@ npm run start:desktop:outlook
 
 It may require signing in your Microsoft Account, but it's not necessary for running tests.
 
-You can skip this part if you're using stable add-in which has external address (for example, on GitHub Pages). In that case, use manifest.xml instead of manifest-localhost.xml in the next step.
-
 ### Add custom add-in to application
 
 Follow the [instruction](https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/sideload-outlook-add-ins-for-testing?tabs=windows-web)
 
-After sideloading your add-in, check in new message form. Window may appear with suggestion to use VS Code extension, you can click "Cancel", so this window does not appear again, but usually it doesn't interfere with running tests.
+After sideloading and opening your add-in there is a possibility of popup window block appearing. As we haven't yet found a way to prevent it's appearing, for now in tests we're using a workaround - pressing Escape after opening add-in.
 
 ## Run Tests
 

@@ -1,5 +1,5 @@
 {
-  "name": "react-native-demo-expo-with-e2e-tests",
+  "name": "msoutlook-test",
   "version": "1.0.0",
 
   "config": {
@@ -11,7 +11,7 @@
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "convert-to-single-host": "node convertToSingleHost.js",
-    "dev-server": "webpack serve --mode development",
+    "dev-server": "webpack serve --mode development --no-client-overlay",
     "lint": "office-addin-lint check",
     "lint:fix": "office-addin-lint fix",
     "prettier": "office-addin-lint prettier",
@@ -19,7 +19,7 @@
     "signout": "office-addin-dev-settings m365-account logout",
     "start": "office-addin-debugging start manifest.xml",
     "start:desktop": "office-addin-debugging start manifest.xml desktop",
-    "start:desktop:outlook": "start ./src/manifest-localhost.xml desktop --app outlook",
+    "start:desktop:outlook": "office-addin-debugging start ./src/manifest-localhost.xml desktop --app outlook",
     "start:web": "office-addin-debugging start manifest.xml web",
     "stop": "office-addin-debugging stop manifest.xml",
     "test:e2e:metro:android": "cross-env TEST_PLATFORM=android jest --config __e2e__/jest.config.js",

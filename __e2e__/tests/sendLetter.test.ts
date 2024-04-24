@@ -1,8 +1,7 @@
 import { have } from 'selenidejs'
 import { $, $$, shared } from '../shared'
 import { faker } from '@faker-js/faker'
-import { testPlatform } from '../utils/platform'
-import { command } from '../utils/selenidejs/command'
+import { press, keys } from '../utils/keyPress'
 
 test('send letter with valid data', async () => {
   const driver = shared.wdioDriver
@@ -23,6 +22,9 @@ test('send letter with valid data', async () => {
   await $$('/Window/Pane/ToolBar/Pane/Pane/Pane/Pane/Pane/Group/Group/Button')
     .elementBy(have.exactText('Message Compose'))
     .click()
+
+  // workaround for disabling popup window
+  await press(keys.ESCAPE)
 
   await $('recipient').setValue(email)
   await $('subject').setValue(subject)
