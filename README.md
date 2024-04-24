@@ -93,8 +93,9 @@ And connect to application by starting session with the following capabilities:
 **ms:waitForAppLaunch** - if you don't include this, there is a possibility of appium not picking up the application window and throwing an error "no such window:Currently selected window has been closed".
 
 **ms:experimental-webdriver** - required for inspecting add-ins. Add-in creates a webview, which isn't accessible by default.
+
 **Important**
-Using this capability at the moment makes impossible searching by relative xpath ('//Button' instead of '/Window/Pane/ToolBar/Pane/Pane/Pane/Pane/Pane/Group/Group/Button') or by text. It may be fixed later, so make sure to check [docs](https://github.com/appium/appium-windows-driver?tab=readme-ov-file#readme) regularly
+Using this capability at the moment makes impossible searching by relative xpath (`//Button` instead of `/Window/Pane/ToolBar/Pane/Pane/Pane/Pane/Pane/Group/Group/Button`) or by text. It may be fixed later, so make sure to check [docs](https://github.com/appium/appium-windows-driver?tab=readme-ov-file#readme) regularly
 
 #### MacOS caps
 
@@ -106,8 +107,8 @@ Using this capability at the moment makes impossible searching by relative xpath
 
 ### Managing windows in tests
 
-Opening new letter form creates a separate window. You can access it by using commands such as driver.getWindowHandles() and driver.switchToWindow().
+Opening new letter form creates a separate window. You can access it by using commands such as `driver.getWindowHandles()` and `driver.switchToWindow()`.
 
-Be aware, that driver.getWindowHandles() returns an array of open application window handles, where the focused one is usually found by index [0], so make sure to use driver.getWindowHandle() first, where there is still only one main application window and save it's value, so the handles won't be mixed up later.
+Be aware, that driver.getWindowHandles() returns an array of open application window handles, where the focused one is usually found by index `[0]`, so make sure to use `driver.getWindowHandle()` first, where there is still only one main application window and save it's value, so the handles won't be mixed up later.
 
-Even if there is only one window left, with the others closed, still make sure to focus on this window by using driver.switchToWindow(), otherwise it can be unaccessible.
+Even if there is only one window left, with the others closed, still make sure to focus on this window by using `driver.switchToWindow()`, otherwise it can be unaccessible.
