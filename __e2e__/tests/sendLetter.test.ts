@@ -1,45 +1,80 @@
-import { have } from 'selenidejs'
-import { $, $$, shared } from '../shared'
+import { $, shared } from '../shared'
 import { faker } from '@faker-js/faker'
-import { press, keys } from '../utils/keyPress'
+import { message, app, addIn } from '../utils/model'
 
-test('send letter with valid data', async () => {
-  const driver = shared.wdioDriver
+const driver = shared.wdioDriver
+
+test('compose letter', async () => {
+  // Create unique test data
   let email = faker.internet.email()
-  let subject = faker.lorem.words(3)
-  let letterText = faker.lorem.sentence()
+  let copyEmail = faker.internet.email()
+  let subject = faker.word.words(3)
+  let text = faker.word.words(6)
   const mainWindow = await driver.getWindowHandle()
 
-  await $('NewItem').click()
+  // Open message compose window
+  await app.createNewLetter()
+  const letterWindow = (await shared.wdioDriver.getWindowHandles()).filter(
+    handle => {
+      return handle != mainWindow
+    },
+  )[0]
+  await driver.switchToWindow(letterWindow)
 
-  let handles = await driver.getWindowHandles()
-  let letter = handles.filter(handle => {
-    return handle != mainWindow
-  })[0]
+  // Set test data in message, finding Edit fields by index
+  await message.setData(email, copyEmail, subject)
+  await message.addText(text)
 
-  await driver.switchToWindow(letter)
+  // Save a draft and close message compose window
+  await message.saveDraft()
 
-  await $$('/Window/Pane/ToolBar/Pane/Pane/Pane/Pane/Pane/Group/Group/Button')
-    .elementBy(have.exactText('Message Compose'))
-    .click()
-
-  // workaround for disabling popup window
-  await press(keys.ESCAPE)
-
-  await $('recipient').setValue(email)
-  await $('subject').setValue(subject)
-  await $('message').setValue(letterText)
-  await $('composeMessage').click()
-  await $('saveMessage').click()
-
+  // Open message drafts
   await driver.switchToWindow(mainWindow)
+  await app.openLastDraft()
 
-  await $$('/Window/Pane/Pane/Custom/Pane/Tree/TreeItem/TreeItem')
-    .elementBy(have.text('Drafts'))
-    .click()
+  // Assert latest draft has test data
+  await app.draftShouldHaveData(email, copyEmail, subject)
+  await app.draftShouldHaveText(text)
+})
 
-  await $$('//Table/DataItem').first.click()
+test('compose letter with add-in signature', async () => {
+  let email = faker.internet.email()
+  let copyEmail = faker.internet.email()
+  let subject = faker.word.words(3)
+  let text = faker.word.words(6)
+  let signature = ' Best regards, ' + faker.person.fullName()
+  const mainWindow = await driver.getWindowHandle()
 
-  await $$('/Window/Pane/Pane/Pane/Edit').should(have.texts(email, '', subject))
-  await $('Body').should(have.exactText(letterText))
+  // Open message compose window
+  await app.createNewLetter()
+  const letterWindow = (await shared.wdioDriver.getWindowHandles()).filter(
+    handle => {
+      return handle != mainWindow
+    },
+  )[0]
+  await driver.switchToWindow(letterWindow)
+
+  // Set test data in message, finding Edit fields by index
+  await message.setData(email, copyEmail, subject)
+  await message.addText(text)
+
+  // Open add-in webview
+  await addIn.open()
+
+  // Add signature in message and save message draft
+  await addIn.setSignature(signature)
+  await addIn.saveMessage()
+
+  // Open message drafts
+  await driver.switchToWindow(mainWindow)
+  await app.openLastDraft()
+
+  // Assert latest draft has test data
+  await app.draftShouldHaveData(email, copyEmail, subject)
+  await app.draftShouldHaveText(text)
+  await app.draftShouldHaveText(signature)
+})
+
+afterEach(async () => {
+  await app.openMainMenu()
 })

@@ -9,6 +9,12 @@ const Selenide = {
 
 global.Selenide = Selenide
 
+Object.defineProperty(globalThis, 'windows', {
+  get() {
+    return testPlatform.isWindows
+  },
+})
+
 Object.defineProperty(globalThis, 'ios', {
   get() {
     return testPlatform.isIos

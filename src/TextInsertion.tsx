@@ -3,31 +3,13 @@ import { useState } from 'react'
 import { Button, Field, Textarea } from '@fluentui/react-components'
 
 const TextInsertion: React.FC = () => {
-  const [recipient, setRecipient] = useState<string>('')
-  const [subject, setSubject] = useState<string>('')
-  const [text, setText] = useState<string>('')
+  const [signature, setSignature] = useState<string>('')
 
-  const handleTextInsertion = async () => {
-    const insertText = async (to: string, subject: string, text: string) => {
+  const handleTextInsertion = async event => {
+    const insertText = async (signature: string) => {
       try {
-        Office.context.mailbox.item.to.setAsync(
-          [to],
-          (asyncResult: Office.AsyncResult<void>) => {
-            if (asyncResult.status === Office.AsyncResultStatus.Failed) {
-              throw asyncResult.error.message
-            }
-          },
-        )
-        Office.context.mailbox.item.subject.setAsync(
-          subject,
-          (asyncResult: Office.AsyncResult<void>) => {
-            if (asyncResult.status === Office.AsyncResultStatus.Failed) {
-              throw asyncResult.error.message
-            }
-          },
-        )
         Office.context.mailbox.item.body.setSelectedDataAsync(
-          text,
+          signature,
           { coercionType: Office.CoercionType.Text },
           (asyncResult: Office.AsyncResult<void>) => {
             if (asyncResult.status === Office.AsyncResultStatus.Failed) {
@@ -39,7 +21,7 @@ const TextInsertion: React.FC = () => {
         console.log('Error: ' + error)
       }
     }
-    await insertText(recipient, subject, text)
+    await insertText(signature)
   }
 
   const handleMessageSaving = async () => {
@@ -57,60 +39,24 @@ const TextInsertion: React.FC = () => {
     await saveDraft()
   }
 
-  const handleRecipientChange = async (
+  const handleSignatureChange = async (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    setRecipient(event.target.value)
-  }
-
-  const handleSubjectChange = async (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setSubject(event.target.value)
-  }
-
-  const handleTextChange = async (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setText(event.target.value)
+    setSignature(event.target.value)
   }
 
   return (
     <div>
-      <Field size="medium" label="Address">
+      <Field size="medium" label="Signature">
         <Textarea
           size="medium"
-          value={recipient}
-          onChange={handleRecipientChange}
-          id={'recipient'}
+          value={signature}
+          onChange={handleSignatureChange}
+          onBlur={handleTextInsertion}
+          id="signature"
         />
       </Field>
-      <Field size="medium" label="Subject">
-        <Textarea
-          size="medium"
-          value={subject}
-          onChange={handleSubjectChange}
-          id="subject"
-        />
-      </Field>
-      <Field size="medium" label="Message">
-        <Textarea
-          size="medium"
-          value={text}
-          onChange={handleTextChange}
-          id="message"
-        />
-      </Field>
-      <Field>Click the button to insert text.</Field>
-      <Button
-        appearance="primary"
-        disabled={false}
-        size="medium"
-        id="composeMessage"
-        onClick={handleTextInsertion}
-      >
-        Set message data
-      </Button>
+      <Field>Click the button to save draft.</Field>
       <Button
         appearance="primary"
         disabled={false}
@@ -118,7 +64,7 @@ const TextInsertion: React.FC = () => {
         id="saveMessage"
         onClick={handleMessageSaving}
       >
-        Save message draft
+        Save message
       </Button>
     </div>
   )

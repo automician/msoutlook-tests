@@ -60,9 +60,14 @@ export const selector = {
 
     // BY CLASS NAME
     if (
-      ['uia', 'xcuielementtype', 'cyi', 'android.widget', 'android.view'].some(
-        it => value.toLowerCase().startsWith(it),
-      )
+      [
+        'uia',
+        'xcuielementtype',
+        'cyi',
+        'android.widget',
+        'android.view',
+        '.',
+      ].some(it => value.toLowerCase().startsWith(it))
     ) {
       return new By('class name', value)
     }
@@ -94,7 +99,7 @@ export const selector = {
          */
         return new By('id', value)
       } else {
-        // ios...
+        // ios, Windows
         return new By('accessibility id', value)
       }
     }
