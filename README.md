@@ -136,7 +136,7 @@ Even if there is only one window left, with the others closed, still make sure t
 
 ### User steps in tests
 
-The app model, located in `utils/model.js` contains main user steps used to compose an email. As the user will be working in two windows for that purpose, steps are divided between `app` for operations in the main window and `letter` for those in message compose window. Steps for working in add-in are also separated for better test readability.
+The app model, located in `utils/model.js` contains main user steps used to compose an email. As the user will be working in two windows for that purpose, steps are divided between `app` for operations in the main window and `message` for those in message compose window. Steps for working in add-in are also separated for better test readability.
 
 ### Auto-correction and keyboard
 
