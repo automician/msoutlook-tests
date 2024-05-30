@@ -105,13 +105,28 @@ This script uses `manifest.xml` file that specifies settings and capabilities of
 
 ### Add custom add-in to application
 
-Follow the [instruction](https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/sideload-outlook-add-ins-for-testing?tabs=windows-web)
+Follow the [instruction](https://learn.microsoft.com/en-us/office/dev/add-ins/outlook/sideload-outlook-add-ins-for-testing?tabs=windows-web):
+
+In Outlook on Windows, you can access the Add-Ins for Outlook dialog by selecting File > Info > Manage Add-ins. This opens Outlook on the web in your preferred browser, then loads the dialog.
+
+In the Add-Ins for Outlook dialog box, select My add-ins.
+
+![Add-ins for Outlook](./resources/001.png)
+
+Locate the Custom Addins section at the bottom of the dialog box. Select the Add a custom add-in link, and then select Add from File.
+
+![Custom Addins](./resources/002.png)
+
+Locate the manifest file for your custom add-in and install it. Accept all prompts during the installation.
 
 After sideloading and opening your add-in there is a possibility of popup window block appearing. As we haven't yet found a way to prevent it's appearing, for now in tests we're using a workaround - pressing Escape after opening add-in.
 
 ### Using add-in
 
-To open add-in in the new message window find the button "Message Compose" on the main tool panel and click on it. In the displayed webview you can see an input field and a button. After typing text into the input and changing focus by pressing Tab or clicking outside of it the text will be added at the end of the email text. After clicking on the button "Save message" the composed message will be saved as a draft and message window will be closed.
+To open add-in in the new message window find the button "Add signature" on the main tool panel and click on it. In the displayed webview you can see an input field and a button. After typing text into the input and changing focus by pressing Tab or clicking outside of it the text will be added at the end of the email text. After clicking on the button "Save message" the composed message will be saved as a draft and message window will be closed.
+
+**Important**
+Make sure ti disable auto-correction in Outlook before running tests to prevent tests failing because of it. To do so go to File > Settings > Mail, locate and click the "Editor settings" button and then "Auto-correction parameters" button. In displayed table uncheck everything and save changes.
 
 ### React properties in Appium
 
@@ -124,7 +139,7 @@ To get access to the add-in webview you should use driver capabilities as descri
   />
 ```
 
-Remember that in Appium Inspector `id` would be changed to `accessibility id`, which is the locator you should use in tests.
+Remember that in Appium Inspector `id` would be displayed as `accessibility id`, which is the locator you should use in tests.
 
 ### Managing windows in tests
 

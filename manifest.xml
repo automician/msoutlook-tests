@@ -84,11 +84,11 @@
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="CommandsGroup.Label" DefaultValue="Custom Add-in"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Message Compose"/>
-        <bt:String id="TaskpaneButton.SupertipTitle" DefaultValue="Message Compose"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Add signature"/>
+        <bt:String id="TaskpaneButton.SupertipTitle" DefaultValue="Add signature"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="TaskpaneButton.SupertipText" DefaultValue="Open the Message Compose add-in"/>
+        <bt:String id="TaskpaneButton.SupertipText" DefaultValue="Open the Add signature add-in"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
